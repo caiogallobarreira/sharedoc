@@ -1,15 +1,10 @@
-<script>
-	import Textarea from '@/components/ui/textarea/textarea.svelte';
-	import Button from "@/components/ui/button/button.svelte";
+<script lang="ts">
+	import Tiptap from '@/components/tiptap/Tiptap.svelte';
+	import { setContext } from 'svelte';
+	import { writable } from 'svelte/store';
 
-	let value = "";
+	let text = writable("");
+	setContext("text", text);
 </script>
 
-<div id="toolbar" class="my-2 flex gap-2">
-	<Button>Bold</Button>
-	<Button>Italic</Button>
-</div>
-
-<Textarea bind:value></Textarea>
-
-{@html value}
+<Tiptap />

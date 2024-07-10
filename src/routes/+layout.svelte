@@ -7,6 +7,6 @@
 	<p class="text-center text-gray-600">Experimento criado usando Sveltekit e Supabase</p>
 </header>
 
-<main class="p-8">
+<main class="flex flex-col p-8 h-full">
 	<slot></slot>
 </main>
