@@ -1,6 +1,8 @@
 import { fontFamily } from "tailwindcss/defaultTheme";
 import type { Config } from "tailwindcss";
 
+import plugin from "@tailwindcss/typography"
+
 const config: Config = {
 	darkMode: ["class"],
 	content: ["./src/**/*.{html,js,svelte,ts}"],
@@ -56,9 +58,19 @@ const config: Config = {
 			},
 			fontFamily: {
 				sans: [...fontFamily.sans]
-			}
+			},
+			typography: {
+        DEFAULT: {
+          css: {
+            maxWidth: '100ch', // add required value here
+          }
+        }
+      }
 		}
 	},
+	plugins: [
+    plugin
+  ],
 };
 
 export default config;
