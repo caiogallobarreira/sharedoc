@@ -32,8 +32,6 @@
     .subscribe()
 </script>
 
-{$text}
-
 {#await document}
   <Skeleton class="h-36 w-full" />
 {:then}
