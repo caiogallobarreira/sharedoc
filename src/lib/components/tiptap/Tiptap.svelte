@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount, onDestroy, getContext } from 'svelte';
+	import { onMount, onDestroy, getContext, createEventDispatcher } from 'svelte';
   import * as ToggleGroup from "$lib/components/ui/toggle-group";
 	import { Editor } from '@tiptap/core';
 	import StarterKit from '@tiptap/starter-kit';
@@ -10,6 +10,7 @@
 	let editor: any;
 
   let textContent: any = getContext("text");
+	const dispatch = createEventDispatcher();
 
 	onMount(() => {
 		editor = new Editor({
@@ -24,9 +25,28 @@
 			onTransaction: () => {
 				// force re-render so `editor.isActive` works as expected
 				editor = editor;
-        $textContent = editor.getHTML();
 			},
+			onUpdate: () => {
+				// update $textContent with the current editor content
+        $textContent = editor.getHTML();
+        // force re-render so `editor.isActive` works as expected
+        editor = editor;
+
+				dispatch('textUpdate', {
+					text: $textContent
+				});
+			}
 		});
+
+		setInterval(() => {
+			// check if content from editor is different from $textContent
+			if (editor.getHTML() !== $textContent) {
+				editor.commands.setContent($textContent);
+				let {from, to} = editor.state.selection;
+				editor.commands.setTextSelection({from, to});
+
+      }
+		}, 1000);
 	});
 
 	onDestroy(() => {
